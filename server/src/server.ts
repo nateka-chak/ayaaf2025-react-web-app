@@ -6,7 +6,6 @@ import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import bcrypt from 'bcryptjs';
 import User from './models/User';
-import { createAdminIfNotExists } from './utils/adminUtils';
 
 dotenv.config();
 const app = express();

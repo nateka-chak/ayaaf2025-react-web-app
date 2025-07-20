@@ -2,8 +2,9 @@
 import User from '../models/User';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
 
-export const register = async (req, res) => {
+export const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   const hashed = await bcrypt.hash(password, 10);
   try {
@@ -14,7 +15,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user || !(await bcrypt.compare(password, user.password))) {

@@ -1,9 +1,14 @@
+import { Request, Response } from 'express';
 import Registration from '../models/Registration';
 
-export const createRegistration = async (req, res) => {
+interface AuthRequest extends Request {
+  user?: { id: string };
+}
+
+export const createRegistration = async (req: AuthRequest, res: Response) => {
   try {
     const { packageType, amount } = req.body;
-    const userId = req.user.id;
+    const userId = req.user?.id;
 
     const reg = await Registration.create({
       userId,
