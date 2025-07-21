@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
-import { FaShoppingCart, FaUser, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
-import useAuth from '../context/useAuth';
+import { FaShoppingCart } from 'react-icons/fa';
 import useCart from '../context/useCart';
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
   const { cart } = useCart();
 
   return (
@@ -15,8 +13,7 @@ export default function Navbar() {
       </Link>
 
       <div className="flex items-center gap-6 text-sm font-medium">
-        <Link to="/packages" className="hover:underline">Packages</Link>
-
+        {/* Removed Packages, Login, and Register links for open access */}
         <Link to="/cart" className="relative hover:underline flex items-center gap-1">
           <FaShoppingCart />
           {cart.length > 0 && (
@@ -25,26 +22,7 @@ export default function Navbar() {
             </span>
           )}
         </Link>
-
-        {!user ? (
-          <>
-            <Link to="/login" className="flex items-center gap-1 hover:underline"><FaUser />Login</Link>
-            <Link to="/register" className="hover:underline">Register</Link>
-          </>
-        ) : (
-          <>
-            {user.role === 'admin' && (
-              <Link to="/admin" className="hover:underline">Admin</Link>
-            )}
-            <div className="flex items-center gap-2">
-              <FaUserCircle className="text-xl text-yellow-400" />
-              <span>{user.username || 'User'}</span>
-            </div>
-            <button onClick={logout} className="hover:text-red-400 flex items-center gap-1">
-              <FaSignOutAlt /> Logout
-            </button>
-          </>
-        )}
+        {/* You can add more links here if needed, e.g., Admin Dashboard */}
       </div>
     </nav>
   );

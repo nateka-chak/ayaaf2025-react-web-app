@@ -7,7 +7,7 @@ import Cart from "./pages/Cart";
 import AdminDashboard from "./pages/AdminDashboard";
 import Layout from "./components/Layout";
 // import useAuth from "./context/AuthContext";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import PaymentDetails from "./pages/PaymentDetails";
 import Packages from "./components/Packages";
 
