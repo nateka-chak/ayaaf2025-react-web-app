@@ -6,23 +6,32 @@ export default function Navbar() {
   const { cart } = useCart();
 
   return (
-    <nav className="bg-[#011627] text-white shadow-md py-4 px-6 flex justify-between items-center sticky top-0 z-50">
-      <Link to="/" className="text-2xl font-bold text-yellow-400 flex items-center gap-2">
-        <img src="/logo.png" alt="AYAAF Logo" className="h-8 w-8" />
-        AYAAF
+    <nav className="bg-[#0a1a16] text-white shadow-md sticky top-0 z-50 py-4 px-6 md:px-12 flex items-center justify-between">
+      {/* Logo */}
+      <Link
+        to="/"
+        className="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-yellow-400"
+      >
+        <img src="/logo.png" alt="AYAAF Logo" className="h-9 w-9" />
+        AYAAF 2025
       </Link>
 
-      <div className="flex items-center gap-6 text-sm font-medium">
-        {/* Removed Packages, Login, and Register links for open access */}
-        <Link to="/cart" className="relative hover:underline flex items-center gap-1">
-          <FaShoppingCart />
+      {/* Navigation */}
+      <div className="flex items-center gap-6 text-sm md:text-base font-medium">
+        {/* Dynamic Links */}
+
+        {/* Cart */}
+        <Link
+          to="/cart"
+          className="relative flex items-center gap-1 hover:text-yellow-400 transition"
+        >
+          <FaShoppingCart className="text-lg" />
           {cart.length > 0 && (
-            <span className="absolute -top-2 -right-3 bg-yellow-400 text-black text-xs font-bold px-2 py-0.5 rounded-full">
+            <span className="absolute -top-2 -right-3 bg-yellow-400 text-black text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
               {cart.length}
             </span>
           )}
         </Link>
-        {/* You can add more links here if needed, e.g., Admin Dashboard */}
       </div>
     </nav>
   );
