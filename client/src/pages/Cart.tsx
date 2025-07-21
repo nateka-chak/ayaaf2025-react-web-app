@@ -1,11 +1,14 @@
 import useCart from '../context/useCart';
 import { FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 export default function Cart() {
   const { cart, removeFromCart } = useCart();
+  const navigate = useNavigate(); // Initialize navigate
 
+  // When user clicks confirm, go to payment details page
   const handleConfirm = () => {
-    alert('✅ Thank you! Your attendance is confirmed. You will receive a confirmation email shortly.');
+    navigate('/payment');
   };
 
   return (
@@ -29,9 +32,7 @@ export default function Cart() {
               >
                 <div>
                   <h4 className="text-lg font-semibold text-green-800 dark:text-green-200">{item.name}</h4>
-                  {item.details && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{item.details}</p>
-                  )}
+                  {/* Removed item.details because CartItem does not have a details property */}
                 </div>
                 <button
                   onClick={() => removeFromCart(item)}
@@ -45,6 +46,7 @@ export default function Cart() {
           </ul>
 
           <div className="mt-8 text-center">
+            {/* Button now navigates to payment details page */}
             <button
               onClick={handleConfirm}
               className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 px-8 rounded-full shadow transition"

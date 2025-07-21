@@ -2,40 +2,40 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 // import Packages from "./pages/Packages";
 import Cart from "./pages/Cart";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
+// import Register from "./pages/Register";
+// import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import Layout from "./components/Layout";
-import useAuth from "./context/AuthContext";
+// import useAuth from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 import PaymentDetails from "./pages/PaymentDetails";
 import Packages from "./components/Packages";
 
+// Main App component that defines all routes
 function App() {
   return (
+    // Define all routes for the application
     <Routes>
+      {/* Layout wraps all pages with common UI (e.g., Navbar, Footer) */}
       <Route element={<Layout />}>
+        {/* Home page route */}
         <Route path="/" element={<Home />} />
+        {/* Packages page route */}
         <Route path="/packages" element={<Packages />} />
+        {/* Cart page route */}
         <Route path="/cart" element={<Cart />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        {/* Payment details page, now accessible without login */}
+        <Route path="/payment" element={<PaymentDetails />} />
+        {/* Admin dashboard page */}
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route
-          path="/payment"
-          element={
-            <ProtectedRoute>
-              <PaymentDetails />
-            </ProtectedRoute>
-          }
-        />
+        {/* Registration and Login routes removed for open access */}
+        {/* <Route path="/register" element={<Register />} /> */}
+        {/* <Route path="/login" element={<Login />} /> */}
       </Route>
     </Routes>
   );
 }
-function ProtectedRoute({ children }: { children: JSX.Element }) {
-  const { user } = useAuth();
-  return user ? children : <Navigate to="/login" />;
-}
+
+// ProtectedRoute removed since all pages are now public
 
 export default App;

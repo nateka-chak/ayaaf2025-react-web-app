@@ -18,7 +18,8 @@ export default function Register() {
     try {
       await axios.post('http://localhost:5000/api/auth/register', form);
       alert('✅ Registration successful!');
-      navigate('/login');
+      // After registration, go to payment details page
+      navigate('/payment');
     } catch {
       alert('❌ Registration failed. Please try again.');
     } finally {
