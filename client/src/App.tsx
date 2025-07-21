@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Packages from "./pages/Packages";
+// import Packages from "./pages/Packages";
 import Cart from "./pages/Cart";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -9,6 +9,7 @@ import Layout from "./components/Layout";
 import useAuth from "./context/AuthContext";
 import { Navigate } from "react-router-dom";
 import PaymentDetails from "./pages/PaymentDetails";
+import Packages from "./components/Packages";
 
 function App() {
   return (

@@ -1,9 +1,9 @@
-import Packages from './Packages';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
 import { Parallax } from 'react-parallax';
 import safariBg from '../assets/safari.jpg';
+import Packages from '../components/Packages';
 
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
@@ -255,7 +255,7 @@ export default function Home() {
           {/* Packages Section */}
           <Packages />
 
-          
+
           {/* Sponsors & Partners Section */}
           <section className="py-14 px-6 max-w-6xl mx-auto text-white">
             <motion.div
