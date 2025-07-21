@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Packages from './Packages';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
@@ -251,6 +251,11 @@ export default function Home() {
               ))}
             </motion.div>
           </section>
+
+          {/* Packages Section */}
+          <Packages />
+
+          
           {/* Sponsors & Partners Section */}
           <section className="py-14 px-6 max-w-6xl mx-auto text-white">
             <motion.div
