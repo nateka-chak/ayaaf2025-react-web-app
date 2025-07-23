@@ -3,9 +3,17 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
-    extend: {},
+  theme: { 
+    extend: {},    spacing: {
+      'section': '1rem', // instead of py-20 (5rem)
+    }
   },
   plugins: [],
 };
+module.exports = {
+  darkMode: 'class',
+  // ...other configs
+}
+
+
 // This is a Tailwind CSS configuration file for a client-side application.

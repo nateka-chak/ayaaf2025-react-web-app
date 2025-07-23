@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+
+export const VITE_API_BASE_URL = import.meta.env.BASE_URL || 'http://localhost:5000';
 
 export default function PaymentDetails() {
   const navigate = useNavigate();
@@ -7,9 +10,7 @@ export default function PaymentDetails() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // You can call your backend API here instead
-    await fetch('/api/send-transaction-email', {
+    await fetch(`${VITE_API_BASE_URL}/api/send-transaction-email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -24,30 +25,53 @@ export default function PaymentDetails() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <div className="max-w-2xl mx-auto bg-black bg-opacity-70 p-8 rounded-lg shadow-lg">
-        <h2 className="text-3xl font-bold text-yellow-300 mb-4">Payment Details</h2>
-        <p className="mb-2">ACCOUNT NAME: <strong>YOUNG AVIATORS CLUB OF AFRICA</strong></p>
-        <p className="mb-2">BANK: <strong>National Bank of Kenya</strong></p>
-        <p className="mb-2">BANK PAYBILL NUMBER: <strong>625625</strong></p>
-        <p className="mb-6">BANK ACCOUNT NUMBER: <strong>01 0200 1890 3100</strong></p>
+    <div className="min-h-screen bg-black text-white px-6 py-16">
+      <div className="max-w-3xl mx-auto bg-gradient-to-br from-[#0d1d23] to-[#081417] border border-white/10 backdrop-blur-lg p-10 rounded-3xl shadow-xl">
+        <motion.h2
+          className="text-4xl font-extrabold text-[#38bdf8] mb-8 text-center tracking-tight"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          💳 Payment Details
+        </motion.h2>
 
-        <form onSubmit={handleSubmit}>
-          <label className="block mb-2 font-semibold text-yellow-400">
-            Paste Transaction Message:
+        <div className="space-y-3 text-sm sm:text-base text-white/80 leading-relaxed">
+          <p>
+            <span className="text-[#38bdf8] font-semibold">ACCOUNT NAME:</span>{' '}
+            YOUNG AVIATORS CLUB OF AFRICA
+          </p>
+          <p>
+            <span className="text-[#38bdf8] font-semibold">BANK:</span>{' '}
+            National Bank of Kenya
+          </p>
+          <p>
+            <span className="text-[#38bdf8] font-semibold">PAYBILL NUMBER:</span>{' '}
+            625625
+          </p>
+          <p>
+            <span className="text-[#38bdf8] font-semibold">ACCOUNT NUMBER:</span>{' '}
+            01 0200 1890 3100
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="mt-10">
+          <label className="block mb-3 text-sm font-medium text-[#38bdf8]">
+            Paste your M-Pesa transaction message:
           </label>
           <textarea
-            className="w-full p-4 rounded-lg bg-gray-800 border border-yellow-400 text-white"
-            rows={5}
+            className="w-full bg-black border border-[#38bdf8] text-white rounded-xl p-4 text-sm placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#38bdf8] transition"
+            rows={6}
+            placeholder="e.g., Confirmed. Ksh 5,500 sent to YOUNG AVIATORS CLUB OF AFRICA on..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
           />
           <button
             type="submit"
-            className="mt-4 bg-yellow-400 text-black font-bold py-2 px-6 rounded hover:bg-yellow-300 transition"
+            className="mt-6 bg-[#38bdf8] hover:bg-[#0ea5e9] text-black font-semibold py-3 px-8 rounded-full shadow-lg transition w-full"
           >
-            Submit & Return Home
+            ✅ Submit & Return Home
           </button>
         </form>
       </div>

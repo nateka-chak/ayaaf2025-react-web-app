@@ -1,34 +1,52 @@
-# Node modules
-client/node_modules
-server/node_modules
-
-# Environment variables
-client/.env
-server/.env
-.env
-
-# Build output
-client/dist
-server/build
-server/dist
-
 # Logs
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# IDE/Editor files
-.vscode/
-.idea/
-.DS_Store
+# Dependency directories
+**/node_modules/
 
-# OS files
-Thumbs.db
+# dotenv files (secrets)
+**/.env
+**/.env.*.local
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+# Build directories
+client/dist/
+client/.vite/
+client/.next/
+
+server/build/
+server/dist/
+server/*.js
+server/*.js.map
+server/**/*.js
+server/**/*.js.map
 
 # TypeScript
-client/tsconfig.tsbuildinfo
-server/tsconfig.tsbuildinfo
+**/*.tsbuildinfo
 
-# Uploaded files (optional)
-server/uploads
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Editor-specific
+.vscode/
+.idea/
+*.swp
+
+# Test coverage
+coverage/
+
+# Optional npm/yarn/pnpm lock files depending on the strategy
+# You can ignore one if you don't want it committed
+# yarn.lock
+# package-lock.json
+# pnpm-lock.yaml

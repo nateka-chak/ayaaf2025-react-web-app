@@ -14,13 +14,13 @@ router.post('/api/payment', async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.MAIL_USER, // Your email e.g. no-reply@ayaaf.africa or Gmail
-      pass: process.env.MAIL_PASS, // Your app password
+      user: process.env.EMAIL_USER, // Your email e.g. no-reply@ayaaf.africa or Gmail
+      pass: process.env.EMAIL_PASS, // Your app password
     },
   });
 
   const mailOptions = {
-    from: process.env.MAIL_USER,
+    from: process.env.EMAIL_USER,
     to: 'ayaaf.yaoafrica@gmail.com',
     subject: 'New Sponsorship Payment Submitted',
     html: `
