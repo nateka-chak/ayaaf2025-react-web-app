@@ -10,6 +10,11 @@ import Layout from "./components/Layout";
 // import { Navigate } from "react-router-dom";
 import PaymentDetails from "./pages/PaymentDetails";
 import Packages from "./components/Packages";
+import RegisterMember from "./pages/RegisterMember";
+import RegisterNonMember from "./pages/RegisterNonMember";
+import RegisterDelegate from "./pages/RegisterDelegate";
+import RegisterExhibitor from "./pages/RegisterExhibitor";
+
 
 // Main App component that defines all routes
 function App() {
@@ -31,6 +36,11 @@ function App() {
         {/* Registration and Login routes removed for open access */}
         {/* <Route path="/register" element={<Register />} /> */}
         {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/register-member" element={<RegisterMember />} />
+<Route path="/register-non-member" element={<RegisterNonMember />} />
+<Route path="/register-delegate" element={<RegisterDelegate />} />
+<Route path="/register-exhibitor" element={<RegisterExhibitor />} />
+    
       </Route>
     </Routes>
   );
