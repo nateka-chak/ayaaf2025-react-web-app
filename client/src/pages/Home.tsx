@@ -48,7 +48,7 @@ export default function Home() {
       {!showSplash && (
         <>
           <main className="">
-            {/* Hero / Registration */}
+            {/* Hero / Registration section */}
             <section
               id="registration"
               className="relative min-h-[60vh] flex flex-col items-center justify-center bg-cover bg-center"

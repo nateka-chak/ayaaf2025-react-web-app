@@ -18,15 +18,6 @@ export default function Navbar() {
         <div className="flex items-center gap-2 text-sm md:text-base font-medium">
           <a href="#registration" className="hover:text-sky-300 transition scroll-smooth">Register</a>
           <a href="#volunteers" className="hover:text-sky-300 transition scroll-smooth">Volunteer</a>
-
-          <Link to="/cart" className="relative hover:text-sky-300 transition">
-            <FaShoppingCart className="text-lg" />
-            {cart.length > 0 && (
-              <span className="absolute -top-2 -right-3 bg-sky-400 text-black text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
-                {cart.length}
-              </span>
-            )}
-          </Link>
         </div>
       </div>
     </nav>
