@@ -123,24 +123,25 @@ export default function Home() {
     </p>
   </motion.div>
 
-  <div className="grid md:grid-cols-3 gap-8">
+  <div className="grid md:grid-cols-3 gap-6">
     {[poster1, poster2, poster3].map((poster, i) => (
       <motion.div
         key={i}
-        className="bg-white/5 rounded-2xl overflow-hidden shadow-xl hover:shadow-sky-400/40 backdrop-blur-md border border-white/10"
+        className="bg-white/5 border border-white/10 overflow-hidden shadow-md hover:shadow-sky-500/30 transition-all duration-300"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: i * 0.15, duration: 0.6 }}
+        transition={{ delay: i * 0.1, duration: 0.5 }}
       >
         <img
           src={poster}
           alt={`AYAAF Poster ${i + 1}`}
-          className="w-full h-[500px] object-cover transition-transform duration-500 hover:scale-105"
+          className="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
         />
       </motion.div>
     ))}
   </div>
 </section>
+
 
 
 

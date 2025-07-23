@@ -16,9 +16,8 @@ export default function Navbar() {
 
         {/* Nav Links & Cart */}
         <div className="flex items-center gap-2 text-sm md:text-base font-medium">
-          <a href="#registration" className="hover:text-sky-300 transition scroll-smooth">Registration</a>
+          <a href="#registration" className="hover:text-sky-300 transition scroll-smooth">Register</a>
           <a href="#volunteers" className="hover:text-sky-300 transition scroll-smooth">Volunteer</a>
-          <a href="#sponsorship" className="hover:text-sky-300 transition scroll-smooth">Sponsorship</a>
 
           <Link to="/cart" className="relative hover:text-sky-300 transition">
             <FaShoppingCart className="text-lg" />
