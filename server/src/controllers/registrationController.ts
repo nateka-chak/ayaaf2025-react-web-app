@@ -1,9 +1,19 @@
+import mongoose from 'mongoose';
 import { Request, Response } from 'express';
-import Registration from '../models/Registration';
+import { Member, NonMember, Delegate, Exhibitor } from '../models/Registration';
 
 interface AuthRequest extends Request {
   user?: { id: string };
 }
+
+const modelMap: Record<RegistrationType, mongoose.Model<any>> = {
+  member: Member,
+  nonMember: NonMember,
+  delegate: Delegate,
+  exhibitor: Exhibitor,
+};
+
+type RegistrationType = 'member' | 'nonMember' | 'delegate' | 'exhibitor';
 /**
  * Create a new registration
  * @param req - Express request object
@@ -12,20 +22,10 @@ interface AuthRequest extends Request {
 
 export const createRegistration = async (req: AuthRequest, res: Response) => {
   try {
-    const { packageType, amount } = req.body;
-    const userId = req.user?.id;
-
-    if (!userId || !packageType || !amount) {
-      return res.status(400).json({ message: 'Missing required fields' });
-    }
-
-    const registration = await Registration.create({
-      userId,
-      packageType,
-      amount,
-      isPaid: true,
-    });
-
+    const { type, ...data } = req.body;
+    const Model = modelMap[type as RegistrationType];
+    if (!Model) return res.status(400).json({ message: 'Invalid registration type' });
+    const registration = await Model.create(data);
     res.status(201).json(registration);
   } catch (err) {
     console.error('Error creating registration:', err);
@@ -42,7 +42,10 @@ export const createRegistration = async (req: AuthRequest, res: Response) => {
 
 export const getAllRegistrations = async (req: AuthRequest, res: Response) => {
   try {
-    const registrations = await Registration.find().populate('userId', 'name');
+    const { type } = req.query;
+    const Model = modelMap[type as RegistrationType];
+    if (!Model) return res.status(400).json({ message: 'Invalid registration type' });
+    const registrations = await Model.find().populate('userId', 'name');
     res.status(200).json(registrations);
   } catch (err) {
     console.error('Error fetching registrations:', err);
@@ -59,7 +62,10 @@ export const getAllRegistrations = async (req: AuthRequest, res: Response) => {
  */
 export const getRegistrationById = async (req: AuthRequest, res: Response) => {
   try {
-    const registration = await Registration.findById(req.params.id).populate('userId', 'name');
+    const { type } = req.query;
+    const Model = modelMap[type as RegistrationType];
+    if (!Model) return res.status(400).json({ message: 'Invalid registration type' });
+    const registration = await Model.findById(req.params.id).populate('userId', 'name');
     if (!registration) {
       return res.status(404).json({ message: 'Registration not found' });
     }
@@ -79,10 +85,12 @@ export const getRegistrationById = async (req: AuthRequest, res: Response) => {
 
 export const updateRegistration = async (req: AuthRequest, res: Response) => {
   try {
-    const { packageType, amount, isPaid } = req.body;
-    const registration = await Registration.findByIdAndUpdate(
+    const { type, ...data } = req.body;
+    const Model = modelMap[type as RegistrationType];
+    if (!Model) return res.status(400).json({ message: 'Invalid registration type' });
+    const registration = await Model.findByIdAndUpdate(
       req.params.id,
-      { packageType, amount, isPaid },
+      data,
       { new: true }
     ).populate('userId', 'name');
 
@@ -105,7 +113,10 @@ export const updateRegistration = async (req: AuthRequest, res: Response) => {
  */
 export const deleteRegistration = async (req: AuthRequest, res: Response) => {
   try {
-    const registration = await Registration.findByIdAndDelete(req.params.id);
+    const { type } = req.query;
+    const Model = modelMap[type as RegistrationType];
+    if (!Model) return res.status(400).json({ message: 'Invalid registration type' });
+    const registration = await Model.findByIdAndDelete(req.params.id);
     if (!registration) {
       return res.status(404).json({ message: 'Registration not found' });
     }
@@ -124,11 +135,13 @@ export const deleteRegistration = async (req: AuthRequest, res: Response) => {
 export const getUserRegistrations = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.id;
+    const { type } = req.query;
+    const Model = modelMap[type as RegistrationType];
     if (!userId) {
       return res.status(400).json({ message: 'User not authenticated' });
     }
-
-    const registrations = await Registration.find({ userId }).populate('userId', 'name');
+    if (!Model) return res.status(400).json({ message: 'Invalid registration type' });
+    const registrations = await Model.find({ userId }).populate('userId', 'name');
     res.status(200).json(registrations);
   } catch (err) {
     console.error('Error fetching user registrations:', err);
@@ -143,7 +156,10 @@ export const getUserRegistrations = async (req: AuthRequest, res: Response) => {
  */ 
 export const getAdminRegistrations = async (req: AuthRequest, res: Response) => {
   try {
-    const registrations = await Registration.find().populate('userId', 'name');
+    const { type } = req.query;
+    const Model = modelMap[type as RegistrationType];
+    if (!Model) return res.status(400).json({ message: 'Invalid registration type' });
+    const registrations = await Model.find().populate('userId', 'name');
     res.status(200).json(registrations);
   } catch (err) {
     console.error('Error fetching admin registrations:', err);

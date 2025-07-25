@@ -9,6 +9,7 @@ import nonMemberRegisterRoute from './routes/registrationRoutes';
 import exhibitorRegisterRoute from './routes/registrationRoutes';
 import delegateRegisterRoute from './routes/registrationRoutes';
 import transactionEmailRoute from './routes/registrationRoutes';
+import projectRoute from './routes/projectRoutes';
 import { Member } from './models/Registration'; // ✅ Import correct model
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use('/api/non-member-register', nonMemberRegisterRoute);
 app.use('/api/exhibitor-register', exhibitorRegisterRoute);
 app.use('/api/delegate-register', delegateRegisterRoute);
 app.use('/api/send-transaction-email', transactionEmailRoute);
+app.use(projectRoute);
 
 // Optional direct post for member (can be removed if handled in registrationRoutes.ts)
 app.post('/api/member-register', async (req, res) => {

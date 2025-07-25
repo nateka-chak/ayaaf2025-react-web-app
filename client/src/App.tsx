@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 // import Packages from "./pages/Packages";
-import Cart from "./pages/Cart";
 // import Register from "./pages/Register";
 // import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -14,6 +13,7 @@ import RegisterMember from "./pages/RegisterMember";
 import RegisterNonMember from "./pages/RegisterNonMember";
 import RegisterDelegate from "./pages/RegisterDelegate";
 import RegisterExhibitor from "./pages/RegisterExhibitor";
+import ProjectRegistration from "./pages/ProjectRegistration";
 
 
 // Main App component that defines all routes
@@ -28,7 +28,6 @@ function App() {
         {/* Packages page route */}
         <Route path="/packages" element={<Packages />} />
         {/* Cart page route */}
-        <Route path="/cart" element={<Cart />} />
         {/* Payment details page, now accessible without login */}
         <Route path="/payment" element={<PaymentDetails />} />
         {/* Admin dashboard page */}
@@ -40,6 +39,7 @@ function App() {
 <Route path="/register-non-member" element={<RegisterNonMember />} />
 <Route path="/register-delegate" element={<RegisterDelegate />} />
 <Route path="/register-exhibitor" element={<RegisterExhibitor />} />
+<Route path="/project-registration" element={<ProjectRegistration />} />
     
       </Route>
     </Routes>

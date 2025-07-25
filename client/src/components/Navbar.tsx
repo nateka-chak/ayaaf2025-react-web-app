@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa';
-import useCart from '../context/useCart';
 
 export default function Navbar() {
-  const { cart } = useCart();
-
   return (
     <nav className="bg-[#0a1a16] text-white sticky top-0 z-50 shadow-sm border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">

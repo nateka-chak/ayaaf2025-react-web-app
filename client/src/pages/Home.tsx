@@ -4,9 +4,9 @@ import { Parallax } from "react-parallax";
 import logo from "../assets/logo.png";
 import safariBg from "../assets/safari.jpg";
 import Packages from "../components/Packages";
-import poster1 from '../assets/poster1.jpg';
-import poster2 from '../assets/poster2.jpg';
-import poster3 from '../assets/poster3.jpg';
+import { Link } from "react-router-dom";
+import GallerySection from "../components/GallerySection";
+
 
 
 export default function Home() {
@@ -110,40 +110,7 @@ export default function Home() {
             </section>
 
 {/* Gallery Section */}
-<section className="py-12 px-6 max-w-7xl mx-auto">
-  <motion.div
-    className="text-center mb-10"
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6 }}
-  >
-    <h2 className="text-4xl font-extrabold text-sky-400 mb-4">Event Posters Gallery</h2>
-    <p className="text-white/80 text-lg max-w-2xl mx-auto">
-      Explore the official visuals for AYAAF 2025. Designed to inspire, share, and promote our mission.
-    </p>
-  </motion.div>
-
-  <div className="grid md:grid-cols-3 gap-6">
-    {[poster1, poster2, poster3].map((poster, i) => (
-      <motion.div
-        key={i}
-        className="bg-white/5 border border-white/10 overflow-hidden shadow-md hover:shadow-sky-500/30 transition-all duration-300"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: i * 0.1, duration: 0.5 }}
-      >
-        <img
-          src={poster}
-          alt={`AYAAF Poster ${i + 1}`}
-          className="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
-        />
-      </motion.div>
-    ))}
-  </div>
-</section>
-
-
-
+<GallerySection />
 
             {/* About AYAAF */}
             <section className="py-16 px-6 max-w-6xl mx-auto">
@@ -310,6 +277,47 @@ hands-on activities,</p>
             <section id="sponsorship">
             <Packages />
             </section>
+
+            {/* Project Registration */}
+<section id="project-registration" className="py-12 px-6 max-w-6xl mx-auto">
+  <motion.div
+    className="bg-white/10 backdrop-blur-md rounded-2xl p-8 text-center shadow-lg"
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+  >
+    <h2 className="text-3xl font-extrabold text-sky-300 mb-4">Showcase Your Project</h2>
+    <p className="text-white/80 mb-6">
+      Apply to present your innovative ideas during AYAAF 2025's Project Showcase.
+    </p>
+    <Link to="/project-registration"
+      className="inline-block bg-sky-400 hover:bg-sky-300 text-black font-semibold py-3 px-8 rounded-full transition-all duration-300"
+    >
+      Register Project
+    </Link>
+  </motion.div>
+</section>
+
+{/* Speakers Registration */}
+<section id="speaker-registration" className="py-12 px-6 max-w-6xl mx-auto">
+  <motion.div
+    className="bg-white/10 backdrop-blur-md rounded-2xl p-8 text-center shadow-lg"
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.1 }}
+  >
+    <h2 className="text-3xl font-extrabold text-sky-300 mb-4">Interested in Speaking?</h2>
+    <p className="text-white/80 mb-6">
+      Submit your application to be a speaker at AYAAF 2025.
+    </p>
+    <a href="https://forms.gle/W74tmRhfhGtw5a6m9"
+      target="_blank" rel="noopener noreferrer"
+      className="inline-block bg-sky-400 hover:bg-sky-300 text-black font-semibold py-3 px-8 rounded-full transition-all duration-300"
+    >
+      Register as Speaker
+    </a>
+  </motion.div>
+</section>
 
             {/* Call for Volunteers */}
             <section id="volunteers" className="py-20 max-w-6xl mx-auto">

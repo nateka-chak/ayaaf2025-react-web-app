@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { VITE_API_BASE_URL } from './constants/apiBaseUrl';
 
 interface Registration {
   userId: { name: string };
@@ -8,7 +9,6 @@ interface Registration {
   isPaid: boolean;
   registeredAt: string;
 }
-export const VITE_API_BASE_URL = import.meta.env.BASE_URL || 'http://localhost:5000';
 export default function AdminDashboard() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [loading, setLoading] = useState(true);
