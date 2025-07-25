@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import GallerySection from "../components/GallerySection";
 
 
-
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());

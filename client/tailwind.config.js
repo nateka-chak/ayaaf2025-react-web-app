@@ -1,4 +1,9 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}", // Adjust to your actual folder structure
+  ],
   theme: {
     extend: {
       animation: {
@@ -12,4 +17,5 @@ module.exports = {
       },
     },
   },
+  plugins: [require('tailwind-scrollbar')],
 };

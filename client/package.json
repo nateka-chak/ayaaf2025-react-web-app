@@ -29,6 +29,7 @@
     "react-parallax": "^3.5.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.3",
+    "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {

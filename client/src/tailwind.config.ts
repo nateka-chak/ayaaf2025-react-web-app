@@ -8,7 +8,7 @@ export default {
       'section': '1rem', // instead of py-20 (5rem)
     }
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar')],
 };
 module.exports = {
   darkMode: 'class',
