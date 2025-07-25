@@ -17,8 +17,39 @@ export default function RegisterMember() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Validate form data
+    if (!form.name || !form.group || !form.institution || !form.number || !form.transaction) {
+      alert('Please fill in all fields');
+      return;
+    }  
+    // Send data to backend API
+    try { 
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/member-register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
 
-    // You can store this in backend or send email
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error('Registration failed');
+      }
+      
+    } catch (error) {
+      console.error('Error submitting registration:', error);
+      alert('Failed to submit registration. Please try again later.');
+      return;
+      
+    }
+      
+      
+      // You can store this in backend or send email
     console.log('Registering YACAfrica Member:', form);
 
     alert('Registration submitted successfully!');

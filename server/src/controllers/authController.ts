@@ -4,6 +4,10 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 
+
+// Register and login functions
+// These functions handle user registration and login, including password hashing and JWT token generation
+
 export const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   const hashed = await bcrypt.hash(password, 10);

@@ -10,6 +10,31 @@ export default function PaymentDetails() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!message.trim()) {
+      alert('Please enter a transaction message');
+      return;
+    }   
+    // Send transaction message to backend API
+    try {   
+      const response = await fetch(`${VITE_API_BASE_URL}/api/send-transaction-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send transaction message');
+      }
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to send transaction message');
+      }
+    } catch (error) {
+      console.error('Error sending transaction message:', error); 
+      alert('Failed to send transaction message. Please try again later.');
+      return;   
+    }
     await fetch(`${VITE_API_BASE_URL}/api/send-transaction-email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -23,7 +48,13 @@ export default function PaymentDetails() {
     alert('Transaction message sent. Thank you!');
     navigate('/');
   };
-
+  // Render the payment details and form  
+  // This component displays the payment details and a form to submit the transaction message
+  // It uses Framer Motion for animations and has a responsive design   
+  // The form submission sends the transaction message to the backend API
+  // The payment details include account name, bank, paybill number, and account number
+  // The component is styled with Tailwind CSS for a modern look
+  // The form includes a textarea for the transaction message and a submit button
   return (
     <div className="min-h-screen bg-black text-white px-6 py-16">
       <div className="max-w-3xl mx-auto bg-gradient-to-br from-[#0d1d23] to-[#081417] border border-white/10 backdrop-blur-lg p-10 rounded-3xl shadow-xl">

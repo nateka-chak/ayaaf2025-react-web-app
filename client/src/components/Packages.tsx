@@ -92,6 +92,59 @@ export default function Packages() {
     },
   ];
 
+
+  // // Render the component
+  // // This component displays the AYAAF packages with animations and links to registration pages 
+  // const handleChange = (e) => {
+  //   setForm({ ...form, [e.target.name]: e.target.value });
+  // };  
+  // const [form, setForm] = React.useState({
+  //   name: '',
+  //   group: '',
+  //   institution: '',
+  //   number: '',
+  //   transaction: '',
+  // }); 
+  // const navigate = useNavigate();
+
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   // Validate form data
+  //   if (!form.name || !form.group || !form.institution || !form.number || !form.transaction) {
+  //     alert('Please fill in all fields');
+  //     return;
+  //   }
+    
+  //   // Send data to backend API
+  //   try {
+  //     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/member-register`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(form),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+
+  //     const data = await response.json();
+  //     if (!data.success) {
+  //       throw new Error('Registration failed');
+  //     }
+
+  //     alert('Registration submitted successfully!');
+  //     navigate('/');
+  //   } catch (error) {
+  //     console.error('Error submitting registration:', error);
+  //     alert('Failed to submit registration. Please try again later.');
+  //   }
+  // };  
+
+  // Render the component
+  // This component displays the AYAAF packages with animations and links to registration pages
   return (
     <div className="max-w-7xl mx-auto py-20 px-6 text-white">
       {/* Title */}

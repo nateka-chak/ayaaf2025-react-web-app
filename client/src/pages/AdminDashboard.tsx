@@ -15,6 +15,12 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      // Fetch registrations from the backend API   
+      // This function retrieves all registrations and sets the state
+      // It uses axios for HTTP requests and handles loading state
+      // The API endpoint is protected, so it includes the authorization token
+      // The registrations are displayed in a table with columns for name, package type, payment status
       try {
         const token = localStorage.getItem('token');
         const res = await axios.get(`${VITE_API_BASE_URL}/api/admin/registrations`, {
@@ -29,6 +35,11 @@ export default function AdminDashboard() {
     };
     fetchData();
   }, []);
+  // Render the admin dashboard with a list of registrations
+  // This component fetches registrations from the backend API and displays them in a table   
+  // It uses Framer Motion for animations and has a responsive design
+  // The table includes columns for name, package type, payment status, and registration date
+  // The component is styled with Tailwind CSS for a modern look
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-16">
