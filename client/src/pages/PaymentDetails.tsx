@@ -15,10 +15,10 @@ export default function PaymentDetails() {
     }   
     // Send transaction message to backend API
     try {   
-      const response = await fetch(`${VITE_API_BASE_URL}/api/send-transaction-email`, {
+      const response = await fetch(`${VITE_API_BASE_URL}api/payment`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ transactionMessage: message }),
       });
 
       if (!response.ok) {
@@ -26,23 +26,13 @@ export default function PaymentDetails() {
       }
 
       const data = await response.json();
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to send transaction message');
-      }
+      // The backend returns { message: 'Payment details sent successfully' } on success
+      // You can check for data.message if needed
     } catch (error) {
       console.error('Error sending transaction message:', error); 
       alert('Failed to send transaction message. Please try again later.');
       return;   
     }
-    await fetch(`${VITE_API_BASE_URL}/api/send-transaction-email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        to: 'ayaaf.yaoafrica@gmail.com',
-        subject: 'New Sponsorship Transaction',
-        text: message,
-      }),
-    });
 
     alert('Transaction message sent. Thank you!');
     navigate('/');

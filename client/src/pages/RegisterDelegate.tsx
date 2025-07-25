@@ -24,7 +24,7 @@ export default function RegisterDelegate() {
     } 
     // Send data to backend API
     try { 
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/delegate-register`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/register/delegate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

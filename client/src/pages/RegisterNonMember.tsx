@@ -23,7 +23,7 @@ export default function RegisterNonMember() {
     } 
     // Send data to backend API
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/non-member-register`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/register/non-member`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

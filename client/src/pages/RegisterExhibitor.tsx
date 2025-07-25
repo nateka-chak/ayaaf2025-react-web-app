@@ -23,7 +23,7 @@ export default function RegisterExhibitor() {
     }   
     // Send data to backend API
     try { 
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/exhibitor-register`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/register/exhibitor`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

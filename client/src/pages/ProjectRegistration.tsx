@@ -56,7 +56,7 @@ export default function ProjectRegistration() {
           Project Registration
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {['name', 'institution', 'number', 'title', 'description'].map(field => (
+          {['name', 'group', 'institution', 'number', 'title', 'description', 'transaction'].map(field => (
             <div key={field}>
               <label className="block mb-2 text-sm text-sky-300 capitalize">{field.replace('_', ' ')}</label>
               {field === 'description' ? (
