@@ -6,7 +6,7 @@ const router = express.Router();
 // Route to handle payment submission
 // This route will send an email with the payment details
 
-router.post('/api/payment', async (req, res) => {
+router.post('/', async (req, res) => {
   const { transactionMessage, userEmail } = req.body;
 
   if (!transactionMessage) {
