@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function RegisterExhibitor() {
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: '',
     institution: '',
@@ -16,11 +17,20 @@ export default function RegisterExhibitor() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevent multiple submissions
+    if (isSubmitting) {
+      return;
+    }
+    
     // Validate form data
     if (!form.name || !form.institution || !form.number || !form.transaction) {
       alert('Please fill in all fields');   
       return;
     }   
+    
+    setIsSubmitting(true);
+    
     // Send data to backend API
     try { 
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/register/exhibitor`, {
@@ -31,25 +41,34 @@ export default function RegisterExhibitor() {
         body: JSON.stringify(form),
       });
 
+      const data = await response.json();
+      
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        // Handle specific error cases
+        if (response.status === 409) {
+          throw new Error(data.error || 'This transaction code has already been used');
+        } else if (response.status === 429) {
+          throw new Error(data.error || 'Please wait a moment before trying again');
+        } else {
+          throw new Error(data.error || 'Network response was not ok');
+        }
       }
 
-      const data = await response.json();
       if (!data.success) {
-        throw new Error('Registration failed');
+        throw new Error(data.error || 'Registration failed');
       }
       
-    } catch (error) {
+      // You can store this in backend or send email  
+      console.log('Registering Exhibitor:', form);
+      alert('Registration submitted successfully!');
+      navigate('/');
+      
+    } catch (error: any) {
       console.error('Error submitting registration:', error);   
-      alert('Failed to submit registration. Please try again later.');
-      return;
-    } 
-    // You can store this in backend or send email  
-
-    console.log('Registering Exhibitor:', form);
-    alert('Registration submitted successfully!');
-    navigate('/');
+      alert(error.message || 'Failed to submit registration. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -129,9 +148,14 @@ export default function RegisterExhibitor() {
 
           <button
             type="submit"
-            className="w-full bg-sky-400 text-black font-bold py-3 rounded hover:bg-sky-300 transition"
+            disabled={isSubmitting}
+            className={`w-full font-bold py-3 rounded transition ${
+              isSubmitting 
+                ? 'bg-gray-500 text-gray-300 cursor-not-allowed' 
+                : 'bg-sky-400 text-black hover:bg-sky-300'
+            }`}
           >
-            Submit Registration
+            {isSubmitting ? 'Submitting...' : 'Submit Registration'}
           </button>
         </form>
       </div>

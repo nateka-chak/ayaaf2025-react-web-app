@@ -5,9 +5,12 @@ const projectRegistrationSchema = new mongoose.Schema({
   group: { type: String, required: true },
   institution: { type: String, required: true },
   number: { type: String, required: true },
-  transaction: { type: String, required: true },
+  transaction: { type: String, required: true, unique: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
 }, { timestamps: true });
+
+// Add index for better performance
+projectRegistrationSchema.index({ transaction: 1 });
 
 export const Project = mongoose.model('Project', projectRegistrationSchema);

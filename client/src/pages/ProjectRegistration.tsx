@@ -9,11 +9,13 @@ interface FormState {
   transaction: string;
   title: string;
   description: string;
-  [key: string]: string; // index signature for dynamic access
+  // index signature for dynamic access
+  [key: string]: string;
 }
 
 export default function ProjectRegistration() {
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState<FormState>({
     name: '',
     group: '',
@@ -30,22 +32,44 @@ export default function ProjectRegistration() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Prevent multiple submissions
+    if (isSubmitting) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
     try {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/register/project`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error('Failed to submit');
+      
       const data = await res.json();
+      
+      if (!res.ok) {
+        // Handle specific error cases
+        if (res.status === 409) {
+          throw new Error(data.error || 'This transaction code has already been used');
+        } else if (res.status === 429) {
+          throw new Error(data.error || 'Please wait a moment before trying again');
+        } else {
+          throw new Error(data.error || 'Failed to submit');
+        }
+      }
+      
       if (data.success) {
         alert('Project Registered Successfully');
         navigate('/');
       } else {
-        alert('Registration failed');
+        alert(data.error || 'Registration failed');
       }
-    } catch {
-      alert('Error occurred. Try again later.');
+    } catch (error: any) {
+      alert(error.message || 'Error occurred. Try again later.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -70,8 +94,16 @@ export default function ProjectRegistration() {
               )}
             </div>
           ))}
-          <button type="submit" className="w-full bg-sky-400 text-black font-bold py-3 rounded hover:bg-sky-300 transition">
-            Submit Project
+          <button 
+            type="submit" 
+            disabled={isSubmitting}
+            className={`w-full font-bold py-3 rounded transition ${
+              isSubmitting 
+                ? 'bg-gray-500 text-gray-300 cursor-not-allowed' 
+                : 'bg-sky-400 text-black hover:bg-sky-300'
+            }`}
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit Project'}
           </button>
         </form>
       </div>

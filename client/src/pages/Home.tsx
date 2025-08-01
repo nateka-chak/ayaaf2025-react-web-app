@@ -208,69 +208,87 @@ hands-on activities,</p>
             </Parallax>
 
             {/* Schedule as Tab Styled Cards */}
-            <section className="py-20 px-6 max-w-6xl mx-auto">
-              <h2 className="text-4xl font-extrabold text-sky-300 text-center mb-10">
-                Event Program
-              </h2>
-              <div className="grid md:grid-cols-3 gap-6">
-                {[
-                  {
-                    day: "Day 1",
-                    title: "Cleared for Takeoff",
-                    events: ["Arrival & Registration", "Welcome Cocktail"],
-                  },
-                  {
-                    day: "Day 2",
-                    title: "Soaring to New Heights",
-                    events: [
-                      "Wellness",
-                      "Keynotes",
-                      "Exhibitions",
-                      "Stargazing",
-                    ],
-                  },
-                  {
-                    day: "Day 3",
-                    title: "Navigating the Skies",
-                    events: ["Panels", "Innovation", "Workshops", "Campfire"],
-                  },
-                  {
-                    day: "Day 4",
-                    title: "Beyond the Horizon",
-                    events: [
-                      "Space Masterclass",
-                      "Satellite Sessions",
-                      "Planetarium Dinner",
-                    ],
-                  },
-                  {
-                    day: "Day 5",
-                    title: "Landing with Purpose",
-                    events: ["Tech Class", "Innovation Awards"],
-                  },
-                ].map((d, i) => (
-                  <motion.div
-                    key={i}
-                    className="bg-white/5 rounded-t-lg shadow-lg border-t-4 border-sky-300 p-6"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-sm text-gray-400">{d.day}</span>
-                      <span className="text-sky-400 font-semibold">
-                        {d.title}
-                      </span>
-                    </div>
-                    <ul className="list-disc pl-5 text-white/80 space-y-1 text-sm">
-                      {d.events.map((e, j) => (
-                        <li key={j}>{e}</li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                ))}
-              </div>
-            </section>
+<section className="py-20 px-6 max-w-6xl mx-auto">
+  <h2 className="text-4xl font-extrabold text-sky-300 text-center mb-10">
+    Event Program
+  </h2>
+  <div className="grid md:grid-cols-3 gap-6">
+    {[
+      {
+        day: "Day 1",
+        title: "Cleared for Take-off",
+        events: [
+          "Arrival & Registration: Participants check-in, receive materials, and settle in.",
+          "Official Opening & Keynote: Formal commencement with addresses from forum chair and leaders.",
+          "Career & Training Insights: Interactive sessions on aviation and aerospace career paths.",
+          "Story Behind the Wings: Inspiring journeys by seasoned aviation professionals.",
+          "Reception & Cultural Performances: Networking session with cultural showcases.",
+        ],
+      },
+      {
+        day: "Day 2",
+        title: "Soaring to New Heights",
+        events: [
+          "Morning Wellness Session: Prepare for the day with physical and mental focus.",
+          "Keynote Speeches & Thematic Panels: AI, automation, drones, and mobility in Africa.",
+          "Innovation Spotlight (Prototypes): Youth showcase projects to industry leaders.",
+          "Networking & Speed Mentorship: 1-on-1 career guidance with professionals.",
+          "Digital Platform Showcase: Tools for continued learning, networking, and mentorship.",
+        ],
+      },
+      {
+        day: "Day 3",
+        title: "Navigating the Skies",
+        events: [
+          "Morning Wellness Session: Mindfulness and resilience for personal growth.",
+          "Regulatory & Operational Insights: Safety and operations from top authorities.",
+          "Innovation Spotlight (Verbal Ideas): Youth pitch their ideas and solutions.",
+          "Workshops & Challenges: Topics on sustainability, regional connectivity, and more.",
+          "Campfire Story Night: Celebrating African heritage and storytelling.",
+        ],
+      },
+      {
+        day: "Day 4",
+        title: "Beyond the Horizon",
+        events: [
+          "Morning Wellness Session: Leadership and strategic thinking activities.",
+          "Aerospace & Space Tech Sessions: Masterclasses on Africa’s space economy and astronomy.",
+          "Innovation Spotlight (Proposed Solutions): Youth propose solutions to aerospace challenges.",
+          "Networking & Industry Collaboration: Connect with space agencies and stakeholders.",
+          "Africa Dinner, Dance, and Sky Observation: Cultural celebration and stargazing.",
+        ],
+      },
+      {
+        day: "Day 5",
+        title: "Landing with Purpose",
+        events: [
+          "Morning Wellness Session: Reflections and leadership aspirations.",
+          "Youth Leadership & Empowerment: Discussions on skills, education, and leadership.",
+          "Closing Ceremony: Forum summary, recognitions, and future roadmap keynote.",
+          "Airport Immersion Tour: Visit to a major airport for operational insights.",
+        ],
+      },
+    ].map((d, i) => (
+      <motion.div
+        key={i}
+        className="bg-white/5 rounded-t-lg shadow-lg border-t-4 border-sky-300 p-6"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: i * 0.1 }}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-sm text-gray-400">{d.day}</span>
+          <span className="text-sky-400 font-semibold">{d.title}</span>
+        </div>
+        <ul className="list-disc pl-5 text-white/80 space-y-1 text-sm">
+          {d.events.map((e, j) => (
+            <li key={j}>{e}</li>
+          ))}
+        </ul>
+      </motion.div>
+    ))}
+  </div>
+</section>
 
             {/* Packages */}
             <section id="sponsorship">
@@ -354,6 +372,30 @@ hands-on activities,</p>
                 </a>
               </motion.div>
             </section>
+            {/* Sponsors & Partners Section */}
+<section className="py-20 px-6 max-w-7xl mx-auto">
+  <div className="text-center mb-10">
+    <h2 className="text-4xl font-extrabold text-sky-400 mb-4">Our Sponsors & Partners</h2>
+    <p className="text-white/80 text-lg max-w-xl mx-auto">
+      We proudly acknowledge our amazing partners who make AYAAF 2025 possible.
+    </p>
+  </div>
+
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-center">
+    {/* Replace logos with actual image paths */}
+  <img
+    src="/sponsors/logo1.png"
+    alt="Sponsor 1"
+    className="h-16 bg-grey mx-auto grayscale hover:grayscale-0 transition duration-300"
+  />
+        <img
+      src="/sponsors/logo2.png"
+      alt="Sponsor 1"
+      className="h-16 mx-auto grayscale hover:grayscale-0 transition duration-300"
+    />
+    {/* Add more logos as needed */}
+  </div>
+</section>
           </main>
         </>
       )}
