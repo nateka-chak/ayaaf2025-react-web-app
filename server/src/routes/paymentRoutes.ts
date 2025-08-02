@@ -4,16 +4,18 @@ import nodemailer from 'nodemailer';
 const router = express.Router();
 
 // Route to handle sponsorship payment submission
-router.post('/', async (req, res) => {
+router.post('/', async (req, res): Promise<void> => {
   const { transactionMessage, userEmail } = req.body;
 
   if (!transactionMessage) {
-    return res.status(400).json({ message: 'Transaction message is required' });
+    res.status(400).json({ message: 'Transaction message is required' });
+    return;
   }
 
   // Check email configuration
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    return res.status(500).json({ message: 'Email configuration is missing' });
+    res.status(500).json({ message: 'Email configuration is missing' });
+    return;
   }
 
   // Configure Nodemailer

@@ -13,7 +13,7 @@ setInterval(() => {
   }
 }, 5 * 60 * 1000); // Run every 5 minutes
 
-export const preventDuplicateSubmissions = (req: Request, res: Response, next: NextFunction) => {
+export const preventDuplicateSubmissions = (req: Request, res: Response, next: NextFunction): void => {
   // Create a unique key based on user data and timestamp
   const userData = JSON.stringify({
     name: req.body.name,
@@ -26,10 +26,11 @@ export const preventDuplicateSubmissions = (req: Request, res: Response, next: N
   
   // Check if this submission was made recently (within 10 seconds)
   if (recentSubmissions.has(submissionKey)) {
-    return res.status(429).json({ 
+    res.status(429).json({ 
       error: 'Duplicate submission detected. Please wait a moment before trying again.',
       success: false 
     });
+    return;
   }
   
   // Store this submission

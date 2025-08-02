@@ -6,16 +6,17 @@ import { preventDuplicateSubmissions } from '../middleware/duplicatePrevention';
 const router = express.Router();
 
 // Member Registration
-router.post('/api/register/member', preventDuplicateSubmissions, async (req, res) => {
+router.post('/api/register/member', preventDuplicateSubmissions, async (req, res): Promise<void> => {
   try {
     const { name, group, institution, number, transaction } = req.body;
     
     // Validate required fields
     if (!name || !group || !institution || !number || !transaction) {
-      return res.status(400).json({ 
+      res.status(400).json({ 
         error: 'All fields are required', 
         success: false 
       });
+      return;
     }
 
     const newEntry = new Member({ name, group, institution, number, transaction });
@@ -35,10 +36,11 @@ router.post('/api/register/member', preventDuplicateSubmissions, async (req, res
     
     // Handle duplicate key error
     if (err.code === 11000) {
-      return res.status(409).json({ 
+      res.status(409).json({ 
         error: 'This transaction code has already been used. Please check your payment confirmation.',
         success: false 
       });
+      return;
     }
     
     res.status(500).json({ error: 'Failed to register member', success: false });
@@ -46,16 +48,17 @@ router.post('/api/register/member', preventDuplicateSubmissions, async (req, res
 });
 
 // Non-member Registration
-router.post('/api/register/non-member', preventDuplicateSubmissions, async (req, res) => {
+router.post('/api/register/non-member', preventDuplicateSubmissions, async (req, res): Promise<void> => {
   try {
     const { name, institution, number, transaction } = req.body;
     
     // Validate required fields
     if (!name || !institution || !number || !transaction) {
-      return res.status(400).json({ 
+      res.status(400).json({ 
         error: 'All fields are required', 
         success: false 
       });
+      return;
     }
 
     const newEntry = new NonMember({ name, institution, number, transaction });
@@ -75,10 +78,11 @@ router.post('/api/register/non-member', preventDuplicateSubmissions, async (req,
     
     // Handle duplicate key error
     if (err.code === 11000) {
-      return res.status(409).json({ 
+      res.status(409).json({ 
         error: 'This transaction code has already been used. Please check your payment confirmation.',
         success: false 
       });
+      return;
     }
     
     res.status(500).json({ error: 'Failed to register non-member', success: false });
@@ -86,16 +90,17 @@ router.post('/api/register/non-member', preventDuplicateSubmissions, async (req,
 });
 
 // Delegate Registration
-router.post('/api/register/delegate', preventDuplicateSubmissions, async (req, res) => {
+router.post('/api/register/delegate', preventDuplicateSubmissions, async (req, res): Promise<void> => {
   try {
     const { name, institution, number, transaction } = req.body;
     
     // Validate required fields
     if (!name || !institution || !number || !transaction) {
-      return res.status(400).json({ 
+      res.status(400).json({ 
         error: 'All fields are required', 
         success: false 
       });
+      return;
     }
 
     const newEntry = new Delegate({ name, institution, number, transaction });
@@ -115,10 +120,11 @@ router.post('/api/register/delegate', preventDuplicateSubmissions, async (req, r
     
     // Handle duplicate key error
     if (err.code === 11000) {
-      return res.status(409).json({ 
+      res.status(409).json({ 
         error: 'This transaction code has already been used. Please check your payment confirmation.',
         success: false 
       });
+      return;
     }
     
     res.status(500).json({ error: 'Failed to register delegate', success: false });
@@ -126,16 +132,17 @@ router.post('/api/register/delegate', preventDuplicateSubmissions, async (req, r
 });
 
 // Exhibitor Registration
-router.post('/api/register/exhibitor', preventDuplicateSubmissions, async (req, res) => {
+router.post('/api/register/exhibitor', preventDuplicateSubmissions, async (req, res): Promise<void> => {
   try {
     const { name, institution, number, transaction } = req.body;
     
     // Validate required fields
     if (!name || !institution || !number || !transaction) {
-      return res.status(400).json({ 
+      res.status(400).json({ 
         error: 'All fields are required', 
         success: false 
       });
+      return;
     }
 
     const newEntry = new Exhibitor({ name, institution, number, transaction });
@@ -155,10 +162,11 @@ router.post('/api/register/exhibitor', preventDuplicateSubmissions, async (req, 
     
     // Handle duplicate key error
     if (err.code === 11000) {
-      return res.status(409).json({ 
+      res.status(409).json({ 
         error: 'This transaction code has already been used. Please check your payment confirmation.',
         success: false 
       });
+      return;
     }
     
     res.status(500).json({ error: 'Failed to register exhibitor', success: false });

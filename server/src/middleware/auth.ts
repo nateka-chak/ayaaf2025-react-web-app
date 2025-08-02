@@ -6,9 +6,12 @@ interface AuthRequest extends Request {
   user?: any;
 }
 
-export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'Unauthorized' });
+  if (!token) {
+    res.status(401).json({ message: 'Unauthorized' });
+    return;
+  }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
@@ -19,14 +22,20 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
   }
 };
 
-export const isAdmin = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const isAdmin = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   const user = await User.findById(req.user.id);
-  if (user?.role !== 'admin') return res.status(403).json({ message: 'Admin only' });
+  if (user?.role !== 'admin') {
+    res.status(403).json({ message: 'Admin only' });
+    return;
+  }
   next();
 };
 
-export const isAuthenticated = async (req: AuthRequest, res: Response, next: NextFunction) => {
-  if (!req.user) return res.status(401).json({ message: 'Unauthorized' });
+export const isAuthenticated = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+  if (!req.user) {
+    res.status(401).json({ message: 'Unauthorized' });
+    return;
+  }
   next();
 };
 
