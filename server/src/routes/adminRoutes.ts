@@ -4,29 +4,48 @@ import { Project } from '../models/Project';
 
 const router = express.Router();
 
+// Type definition for registration data
+interface RegistrationData {
+  _id: any;
+  name: string;
+  institution: string;
+  number: string;
+  transaction: string;
+  group?: string;
+  title?: string;
+  description?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  type: string;
+}
+
 // Get all registrations for admin dashboard
 router.get('/api/admin/registrations', async (req, res) => {
   try {
     // Fetch all registrations from different collections
     const [members, nonMembers, delegates, exhibitors, projects] = await Promise.all([
-      Member.find().sort({ createdAt: -1 }),
-      NonMember.find().sort({ createdAt: -1 }),
-      Delegate.find().sort({ createdAt: -1 }),
-      Exhibitor.find().sort({ createdAt: -1 }),
-      Project.find().sort({ createdAt: -1 })
+      Member.find().sort({ createdAt: -1 }).lean(),
+      NonMember.find().sort({ createdAt: -1 }).lean(),
+      Delegate.find().sort({ createdAt: -1 }).lean(),
+      Exhibitor.find().sort({ createdAt: -1 }).lean(),
+      Project.find().sort({ createdAt: -1 }).lean()
     ]);
 
     // Combine all registrations with type information
-    const allRegistrations = [
-      ...members.map(m => ({ ...m.toObject(), type: 'Member' })),
-      ...nonMembers.map(n => ({ ...n.toObject(), type: 'Non-Member' })),
-      ...delegates.map(d => ({ ...d.toObject(), type: 'Delegate' })),
-      ...exhibitors.map(e => ({ ...e.toObject(), type: 'Exhibitor' })),
-      ...projects.map(p => ({ ...p.toObject(), type: 'Project' }))
+    const allRegistrations: RegistrationData[] = [
+      ...members.map((m: any) => ({ ...m, type: 'Member' })),
+      ...nonMembers.map((n: any) => ({ ...n, type: 'Non-Member' })),
+      ...delegates.map((d: any) => ({ ...d, type: 'Delegate' })),
+      ...exhibitors.map((e: any) => ({ ...e, type: 'Exhibitor' })),
+      ...projects.map((p: any) => ({ ...p, type: 'Project' }))
     ];
 
-    // Sort by creation date (newest first)
-    allRegistrations.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    // Sort by creation date (newest first) - handle cases where createdAt might not exist
+    allRegistrations.sort((a, b) => {
+      const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return dateB - dateA;
+    });
 
     res.json({
       success: true,
