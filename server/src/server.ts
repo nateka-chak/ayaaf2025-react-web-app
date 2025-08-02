@@ -27,6 +27,11 @@ app.use(cors({
       return callback(null, true);
     }
     
+    // Allow your specific production domain
+    if (origin.includes('ayaaf2025.tajithreeinone.com')) {
+      return callback(null, true);
+    }
+    
     // Allow common hosting domains
     if (origin.includes('netlify.app') || origin.includes('vercel.app') || origin.includes('github.io')) {
       return callback(null, true);

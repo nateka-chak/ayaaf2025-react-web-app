@@ -7,8 +7,8 @@ const getApiBaseUrl = () => {
   
   // For production (when not on localhost)
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    // Use the same domain as the frontend but with /api subdirectory
-    return `${window.location.protocol}//${window.location.hostname}/api/`;
+    // Use your Render backend URL
+    return 'https://ayaaf2025-react-web-app.onrender.com/';
   }
   
   // For development (localhost)
