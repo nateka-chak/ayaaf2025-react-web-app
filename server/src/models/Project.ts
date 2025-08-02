@@ -10,7 +10,4 @@ const projectRegistrationSchema = new mongoose.Schema({
   description: { type: String, required: true },
 }, { timestamps: true });
 
-// Add index for better performance
-projectRegistrationSchema.index({ transaction: 1 });
-
 export const Project = mongoose.model('Project', projectRegistrationSchema);

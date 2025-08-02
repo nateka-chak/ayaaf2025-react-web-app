@@ -4,13 +4,6 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import connectDB from './config/db';
 import allRoutes from './routes';
-import memberRegisterRoute from './routes/registrationRoutes';
-import nonMemberRegisterRoute from './routes/registrationRoutes';
-import exhibitorRegisterRoute from './routes/registrationRoutes';
-import delegateRegisterRoute from './routes/registrationRoutes';
-import transactionEmailRoute from './routes/registrationRoutes';
-import projectRoute from './routes/projectRoutes';
-import { Member } from './models/Registration'; // ✅ Import correct model
 
 dotenv.config();
 connectDB();
@@ -18,43 +11,90 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
-app.use(express.json());
-
-// ✅ Load routes
-app.use(allRoutes);
-app.use('/api/member-register', memberRegisterRoute);
-app.use('/api/non-member-register', nonMemberRegisterRoute);
-app.use('/api/exhibitor-register', exhibitorRegisterRoute);
-app.use('/api/delegate-register', delegateRegisterRoute);
-app.use('/api/send-transaction-email', transactionEmailRoute);
-app.use(projectRoute);
-
-// Optional direct post for member (can be removed if handled in registrationRoutes.ts)
-app.post('/api/member-register', async (req, res) => {
-  try {
-    const { name, group, institution, number, transaction } = req.body;
-
-    if (!name || !group || !institution || !number || !transaction) {
-      return res.status(400).json({ error: 'All fields are required' });
+// Enhanced CORS configuration for production (including Render)
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Allow localhost for development
+    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      return callback(null, true);
     }
+    
+    // Allow Render domains
+    if (origin.includes('render.com') || origin.includes('onrender.com')) {
+      return callback(null, true);
+    }
+    
+    // Allow common hosting domains
+    if (origin.includes('netlify.app') || origin.includes('vercel.app') || origin.includes('github.io')) {
+      return callback(null, true);
+    }
+    
+    // Allow your production domain
+    if (origin.includes('ayaaf.africa') || origin.includes('yourdomain.com')) {
+      return callback(null, true);
+    }
+    
+    // For now, allow all origins (you can restrict this later)
+    callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-    const newRegistration = new Member({ name, group, institution, number, transaction });
-    await newRegistration.save();
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-    res.json({ success: true, message: 'Registration submitted successfully' });
-  } catch (err) {
-    console.error('Registration Error:', err);
-    res.status(500).json({ error: 'Server error' });
-  }
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+    deployed: true
+  });
 });
 
+// Load all routes
+app.use(allRoutes);
+
 app.get('/', (req, res) => {
-  res.send('Welcome to the AYAAF API');
+  res.json({ 
+    message: 'Welcome to the AYAAF API',
+    version: '1.0.0',
+    timestamp: new Date().toISOString(),
+    deployed: true
+  });
+});
+
+// Error handling middleware
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('Server Error:', err);
+  res.status(500).json({ 
+    error: 'Internal server error',
+    message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+  });
+});
+
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ 
+    error: 'Route not found',
+    path: req.originalUrl
+  });
 });
 
 mongoose.connect(process.env.MONGO_URI!).then(() => {
   app.listen(PORT, () => {
-    console.log(`✅ Server running at http://localhost:${PORT}`);
+    console.log(`✅ Server running on port ${PORT}`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`📊 MongoDB Connected: ${mongoose.connection.host}`);
+    console.log(`🚀 Deployed on Render: ${process.env.RENDER ? 'Yes' : 'No'}`);
   });
+}).catch((error) => {
+  console.error('❌ MongoDB connection failed:', error);
+  process.exit(1);
 });

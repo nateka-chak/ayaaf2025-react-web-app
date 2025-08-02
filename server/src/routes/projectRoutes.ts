@@ -7,9 +7,27 @@ const router = express.Router();
 
 router.post('/api/register/project', preventDuplicateSubmissions, async (req, res) => {
   try {
-    const newProject = new Project(req.body);
+    const { name, group, institution, number, transaction, title, description } = req.body;
+    
+    // Validate required fields
+    if (!name || !group || !institution || !number || !transaction || !title || !description) {
+      return res.status(400).json({ 
+        error: 'All fields are required', 
+        success: false 
+      });
+    }
+
+    const newProject = new Project({ name, group, institution, number, transaction, title, description });
     await newProject.save();
-    await sendEmail('New Project Registration', req.body);
+    
+    // Send email notification
+    try {
+      await sendEmail('New Project Registration', req.body);
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      // Don't fail the registration if email fails
+    }
+    
     res.json({ success: true, message: 'Project registration successful' });
   } catch (err: any) {
     console.error('Project registration error:', err);

@@ -33,12 +33,6 @@ const exhibitorSchema = new mongoose.Schema({
   transaction: { type: String, required: true, unique: true },
 }, baseOptions);
 
-// Add indexes for better performance
-memberSchema.index({ transaction: 1 });
-nonMemberSchema.index({ transaction: 1 });
-delegateSchema.index({ transaction: 1 });
-exhibitorSchema.index({ transaction: 1 });
-
 export const Member = mongoose.model('Member', memberSchema);
 export const NonMember = mongoose.model('NonMember', nonMemberSchema);
 export const Delegate = mongoose.model('Delegate', delegateSchema);

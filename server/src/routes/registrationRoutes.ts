@@ -8,9 +8,27 @@ const router = express.Router();
 // Member Registration
 router.post('/api/register/member', preventDuplicateSubmissions, async (req, res) => {
   try {
-    const newEntry = new Member(req.body);
+    const { name, group, institution, number, transaction } = req.body;
+    
+    // Validate required fields
+    if (!name || !group || !institution || !number || !transaction) {
+      return res.status(400).json({ 
+        error: 'All fields are required', 
+        success: false 
+      });
+    }
+
+    const newEntry = new Member({ name, group, institution, number, transaction });
     await newEntry.save();
-    await sendEmail('New Member Registration', req.body);
+    
+    // Send email notification
+    try {
+      await sendEmail('New Member Registration', req.body);
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      // Don't fail the registration if email fails
+    }
+    
     res.json({ success: true, message: 'Member registration successful' });
   } catch (err: any) {
     console.error('Member registration error:', err);
@@ -30,9 +48,27 @@ router.post('/api/register/member', preventDuplicateSubmissions, async (req, res
 // Non-member Registration
 router.post('/api/register/non-member', preventDuplicateSubmissions, async (req, res) => {
   try {
-    const newEntry = new NonMember(req.body);
+    const { name, institution, number, transaction } = req.body;
+    
+    // Validate required fields
+    if (!name || !institution || !number || !transaction) {
+      return res.status(400).json({ 
+        error: 'All fields are required', 
+        success: false 
+      });
+    }
+
+    const newEntry = new NonMember({ name, institution, number, transaction });
     await newEntry.save();
-    await sendEmail('New Non-Member Registration', req.body);
+    
+    // Send email notification
+    try {
+      await sendEmail('New Non-Member Registration', req.body);
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      // Don't fail the registration if email fails
+    }
+    
     res.json({ success: true, message: 'Non-member registration successful' });
   } catch (err: any) {
     console.error('Non-member registration error:', err);
@@ -52,9 +88,27 @@ router.post('/api/register/non-member', preventDuplicateSubmissions, async (req,
 // Delegate Registration
 router.post('/api/register/delegate', preventDuplicateSubmissions, async (req, res) => {
   try {
-    const newEntry = new Delegate(req.body);
+    const { name, institution, number, transaction } = req.body;
+    
+    // Validate required fields
+    if (!name || !institution || !number || !transaction) {
+      return res.status(400).json({ 
+        error: 'All fields are required', 
+        success: false 
+      });
+    }
+
+    const newEntry = new Delegate({ name, institution, number, transaction });
     await newEntry.save();
-    await sendEmail('New Delegate Registration', req.body);
+    
+    // Send email notification
+    try {
+      await sendEmail('New Delegate Registration', req.body);
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      // Don't fail the registration if email fails
+    }
+    
     res.json({ success: true, message: 'Delegate registration successful' });
   } catch (err: any) {
     console.error('Delegate registration error:', err);
@@ -74,9 +128,27 @@ router.post('/api/register/delegate', preventDuplicateSubmissions, async (req, r
 // Exhibitor Registration
 router.post('/api/register/exhibitor', preventDuplicateSubmissions, async (req, res) => {
   try {
-    const newEntry = new Exhibitor(req.body);
+    const { name, institution, number, transaction } = req.body;
+    
+    // Validate required fields
+    if (!name || !institution || !number || !transaction) {
+      return res.status(400).json({ 
+        error: 'All fields are required', 
+        success: false 
+      });
+    }
+
+    const newEntry = new Exhibitor({ name, institution, number, transaction });
     await newEntry.save();
-    await sendEmail('New Exhibitor Registration', req.body);
+    
+    // Send email notification
+    try {
+      await sendEmail('New Exhibitor Registration', req.body);
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      // Don't fail the registration if email fails
+    }
+    
     res.json({ success: true, message: 'Exhibitor registration successful' });
   } catch (err: any) {
     console.error('Exhibitor registration error:', err);

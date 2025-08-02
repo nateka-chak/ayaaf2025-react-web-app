@@ -3,9 +3,7 @@ import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
-// Route to handle payment submission
-// This route will send an email with the payment details
-
+// Route to handle sponsorship payment submission
 router.post('/', async (req, res) => {
   const { transactionMessage, userEmail } = req.body;
 
@@ -13,35 +11,19 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ message: 'Transaction message is required' });
   }
 
+  // Check email configuration
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    return res.status(500).json({ message: 'Email configuration is missing' });
+  }
+
   // Configure Nodemailer
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.EMAIL_USER, // Your email e.g. no-reply@ayaaf.africa or Gmail
-      pass: process.env.EMAIL_PASS, // Your app password
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
-  // Set up email options
-  // You can customize the email content as needed
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    return res.status(500).json({ message: 'Email configuration is missing' });
-  } 
-  if (!transactionMessage) {
-    return res.status(400).json({ message: 'Transaction message is required' });
-  }
-  if (!userEmail) {
-    console.warn('No user email provided, using default email');
-  }
-  if (!transactionMessage) {
-    return res.status(400).json({ message: 'Transaction message is required' });
-  }
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    return res.status(500).json({ message: 'Email configuration is missing' });
-  }
-  if (!userEmail) {
-    console.warn('No user email provided, using default email');
-  }
-  
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -60,22 +42,19 @@ router.post('/', async (req, res) => {
     `,
   };
 
-  // Send the email
-  // This will send the email with the payment details to the specified recipient
-
   try {
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Payment details sent successfully' });
+    res.status(200).json({ 
+      success: true,
+      message: 'Payment details sent successfully' 
+    });
   } catch (error) {
     console.error('Email send failed:', error);
-    res.status(500).json({ message: 'Failed to send email' });
+    res.status(500).json({ 
+      success: false,
+      message: 'Failed to send email' 
+    });
   }
-
-  // Additional routes can be added here as needed
-  // Export the router to be used in the main app   
 });
-
-// Export the router to be used in the main app
-// This allows the main app to use this router for payment routes   
 
 export default router;

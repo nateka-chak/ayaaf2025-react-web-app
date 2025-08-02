@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { VITE_API_BASE_URL } from './constants/apiBaseUrl';
 
 export default function RegisterExhibitor() {
   const navigate = useNavigate();
@@ -31,9 +32,13 @@ export default function RegisterExhibitor() {
     
     setIsSubmitting(true);
     
+    // Log the API URL for debugging
+    console.log('🌐 Submitting to:', `${VITE_API_BASE_URL}api/register/exhibitor`);
+    console.log('📝 Form data:', form);
+    
     // Send data to backend API
     try { 
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/register/exhibitor`, {
+      const response = await fetch(`${VITE_API_BASE_URL}api/register/exhibitor`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +46,11 @@ export default function RegisterExhibitor() {
         body: JSON.stringify(form),
       });
 
+      console.log('📡 Response status:', response.status);
+      console.log('📡 Response headers:', response.headers);
+
       const data = await response.json();
+      console.log('📡 Response data:', data);
       
       if (!response.ok) {
         // Handle specific error cases
@@ -49,8 +58,10 @@ export default function RegisterExhibitor() {
           throw new Error(data.error || 'This transaction code has already been used');
         } else if (response.status === 429) {
           throw new Error(data.error || 'Please wait a moment before trying again');
+        } else if (response.status === 0) {
+          throw new Error('Network error - please check your connection');
         } else {
-          throw new Error(data.error || 'Network response was not ok');
+          throw new Error(data.error || `Server error (${response.status})`);
         }
       }
 
@@ -58,13 +69,13 @@ export default function RegisterExhibitor() {
         throw new Error(data.error || 'Registration failed');
       }
       
-      // You can store this in backend or send email  
-      console.log('Registering Exhibitor:', form);
+      // Success!
+      console.log('✅ Registration successful:', form);
       alert('Registration submitted successfully!');
       navigate('/');
       
     } catch (error: any) {
-      console.error('Error submitting registration:', error);   
+      console.error('❌ Error submitting registration:', error);   
       alert(error.message || 'Failed to submit registration. Please try again later.');
     } finally {
       setIsSubmitting(false);
@@ -161,5 +172,4 @@ export default function RegisterExhibitor() {
       </div>
     </div>
   );
-}
-// This code defines a React component for registering exhibitors for an event.             
+}             
