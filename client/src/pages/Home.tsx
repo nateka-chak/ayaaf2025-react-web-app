@@ -381,20 +381,26 @@ hands-on activities,</p>
     </p>
   </div>
 
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-center">
-    {/* Replace logos with actual image paths */}
-  <img
-    src="/sponsors/logo1.png"
-    alt="Sponsor 1"
-    className="h-16 bg-grey mx-auto grayscale hover:grayscale-0 transition duration-300"
-  />
-        <img
-      src="/sponsors/logo2.png"
-      alt="Sponsor 1"
-      className="h-16 mx-auto grayscale hover:grayscale-0 transition duration-300"
-    />
-    {/* Add more logos as needed */}
-  </div>
+<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-center">
+  {[
+    "/sponsors/logo1.png",
+    "/sponsors/logo3.jpg",
+    "/sponsors/logo4.png",
+    "/sponsors/logo5.png",
+  ].map((logo, i) => (
+    <div
+      key={i}
+      className="bg-[#1f2937] p-4 rounded-md flex items-center justify-center shadow-md hover:shadow-sky-400/30 transition duration-300"
+    >
+      <img
+        src={logo}
+        alt={`Sponsor ${i + 1}`}
+        className="h-12 object-contain grayscale hover:grayscale-0 transition duration-300"
+      />
+    </div>
+  ))}
+</div>
+
 </section>
           </main>
         </>

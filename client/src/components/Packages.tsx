@@ -60,7 +60,8 @@ export default function Packages() {
         'Official AYAAF Kit',
         'Exclusive to YACA Members',
       ],
-      link: '/register-member',
+      link: 'https://bit.ly/ayaafyouth',
+      external: true,
     },
     {
       title: 'Non-member – Ksh 5,500',
@@ -70,7 +71,8 @@ export default function Packages() {
         'Certificate of Participation',
         'Meals Included',
       ],
-      link: '/register-non-member',
+      link: 'https://bit.ly/ayaafyouth',
+      external: true,
     },
     {
       title: 'Delegate – Ksh 10,000',
@@ -79,7 +81,8 @@ export default function Packages() {
         'Exhibition Walkthrough',
         'Networking Sessions',
       ],
-      link: '/register-delegate',
+      link: 'https://bit.ly/ayaafdelegate',
+      external: true,
     },
     {
       title: 'Exhibitor – Ksh 25,000',
@@ -89,62 +92,10 @@ export default function Packages() {
         'Full Access Pass',
       ],
       link: '/register-exhibitor',
+      external: false,
     },
   ];
 
-
-  // // Render the component
-  // // This component displays the AYAAF packages with animations and links to registration pages 
-  // const handleChange = (e) => {
-  //   setForm({ ...form, [e.target.name]: e.target.value });
-  // };  
-  // const [form, setForm] = React.useState({
-  //   name: '',
-  //   group: '',
-  //   institution: '',
-  //   number: '',
-  //   transaction: '',
-  // }); 
-  // const navigate = useNavigate();
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   // Validate form data
-  //   if (!form.name || !form.group || !form.institution || !form.number || !form.transaction) {
-  //     alert('Please fill in all fields');
-  //     return;
-  //   }
-    
-  //   // Send data to backend API
-  //   try {
-  //     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}api/member-register`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(form),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-
-  //     const data = await response.json();
-  //     if (!data.success) {
-  //       throw new Error('Registration failed');
-  //     }
-
-  //     alert('Registration submitted successfully!');
-  //     navigate('/');
-  //   } catch (error) {
-  //     console.error('Error submitting registration:', error);
-  //     alert('Failed to submit registration. Please try again later.');
-  //   }
-  // };  
-
-  // Render the component
-  // This component displays the AYAAF packages with animations and links to registration pages
   return (
     <div className="max-w-7xl mx-auto py-20 px-6 text-white">
       {/* Title */}
@@ -172,12 +123,24 @@ export default function Packages() {
                 <li key={j} className="flex items-start gap-2">✔ {item}</li>
               ))}
             </ul>
-            <Link
-              to={pkg.link}
-              className="mt-6 block w-full text-center py-2 bg-sky-400 text-black font-bold rounded-full hover:bg-sky-300 transition"
-            >
-              Register Now
-            </Link>
+
+            {pkg.external ? (
+              <a
+                href={pkg.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 block w-full text-center py-2 bg-sky-400 text-black font-bold rounded-full hover:bg-sky-300 transition"
+              >
+                Register Now
+              </a>
+            ) : (
+              <Link
+                to={pkg.link}
+                className="mt-6 block w-full text-center py-2 bg-sky-400 text-black font-bold rounded-full hover:bg-sky-300 transition"
+              >
+                Register Now
+              </Link>
+            )}
           </motion.div>
         ))}
       </div>
